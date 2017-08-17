@@ -33,7 +33,7 @@ Marionette.OldCompositeView === OldCompositeView; // true
 
 All of the documentation for Marionette.OldCollectionView can be found at
 
-##### [github.com/mationettejs/marionette.oldcollectionvivew/tree/master/docs](https://github.com/mationettejs/marionette.oldcollectionvivew/tree/master/docs)
+##### [github.com/marionettejs/marionette.oldcollectionview/tree/master/docs](https://github.com/marionettejs/marionette.oldcollectionview/tree/master/docs)
 
 The documentation has not been modified from its original state in Marionette.
 
