@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "homepage": "https://marionettejs.com/",
   "main": "lib/marionette.oldcollectionview.js",
+  "module": "lib/marionette.oldcollectionview.esm.js",
   "keywords": [
     "backbone",
     "plugin",
