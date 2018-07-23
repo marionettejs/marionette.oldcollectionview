@@ -3,7 +3,7 @@
   "description": "Legacy Marionette v3 CollectionView and CompositeView",
   "homepage": "https://marionettejs.com/",
   "main": "./lib/marionette.oldcollectionview.js",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "MIT",
   "keywords": [
     "backbone",

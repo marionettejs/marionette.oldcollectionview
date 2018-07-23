@@ -1,7 +1,7 @@
 {
   "name": "marionette.oldcollectionview",
   "description": "Legacy Marionette v3 CollectionView and CompositeView",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "https://marionettejs.com/",
   "main": "lib/marionette.oldcollectionview.js",
   "module": "lib/marionette.oldcollectionview.esm.js",
