@@ -1336,21 +1336,21 @@ describe('collection view', function() {
 
   describe('when calling childViewEvents via a childViewEvents method', function() {
     beforeEach(function() {
+      this.someEventSpy = this.sinon.stub();
+
       this.CollectionView = this.CollectionView.extend({
         childViewEvents: function() {
           return {
             'some:event': 'someEvent'
           };
-        }
+        },
+        someEvent: this.someEventSpy
       });
-
-      this.someEventSpy = this.sinon.stub();
 
       this.model = new Backbone.Model({foo: 'bar'});
       this.collection = new Backbone.Collection([this.model]);
 
       this.collectionView = new this.CollectionView({collection: this.collection});
-      this.collectionView.someEvent = this.someEventSpy;
       this.collectionView.render();
 
       this.sinon.spy(this.collectionView, 'trigger');
@@ -1399,19 +1399,18 @@ describe('collection view', function() {
 
   describe('when calling childViewEvents via the childViewEvents hash with a string of the function name', function() {
     beforeEach(function() {
+      this.someEventSpy = this.sinon.stub();
       var CollectionView = this.CollectionView.extend({
         childViewEvents: {
           'some:event': 'someEvent'
-        }
+        },
+        someEvent: this.someEventSpy
       });
-
-      this.someEventSpy = this.sinon.stub();
 
       this.model = new Backbone.Model({foo: 'bar'});
       this.collection = new Backbone.Collection([this.model]);
 
       this.collectionView = new CollectionView({collection: this.collection});
-      this.collectionView.someEvent = this.someEventSpy;
       this.collectionView.render();
 
       this.sinon.spy(this.collectionView, 'trigger');

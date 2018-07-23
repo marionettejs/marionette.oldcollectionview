@@ -187,7 +187,7 @@ describe('onAttach', function() {
       let collectionViewOnDetach;
 
       beforeEach(function() {
-        detachView = new ChildView({
+        detachView = new View({
           template: _.noop
         });
         ChildView = View.extend({

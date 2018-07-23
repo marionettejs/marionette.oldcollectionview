@@ -2,7 +2,7 @@
 // --------------
 
 import _ from 'underscore';
-import Marionette from 'backbone.marionette';
+import Marionette, { getOption } from 'backbone.marionette';
 
 // split the event name on the ":"
 const splitter = /(^|:)(\w)/gi;
@@ -27,7 +27,7 @@ const getOnMethodName = _.memoize(function(event) {
 export function triggerMethod(event, ...args) {
   // get the method name from the event name
   const methodName = getOnMethodName(event);
-  const method = Marionette.getOption(this, methodName);
+  const method = getOption(this, methodName);
   let result;
 
   // call the onMethodName if it exists
@@ -46,10 +46,17 @@ export function triggerMethod(event, ...args) {
 //
 // e.g. `Marionette.triggerMethodOn(view, 'show')`
 // will trigger a "show" event or invoke onShow the view.
-export function triggerMethodOn(context, ...args) {
+function triggerMethodOn(context, ...args) {
   if (_.isFunction(context.triggerMethod)) {
     return context.triggerMethod.apply(context, args);
   }
 
   return triggerMethod.apply(context, args);
+}
+
+// For tests
+Marionette.triggerMethodOn = triggerMethodOn;
+
+export {
+  triggerMethodOn
 }

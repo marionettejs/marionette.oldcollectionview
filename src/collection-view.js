@@ -3,16 +3,21 @@
 
 import _ from 'underscore';
 import Backbone from 'backbone';
-import Marionette from 'backbone.marionette';
+import { View } from 'backbone.marionette';
+import MarionetteError from './error';
 
 import { renderView, destroyView } from './common/view';
 import monitorViewEvents from './common/monitor-view-events';
 import { triggerMethodOn } from './common/trigger-method';
 import ChildViewContainer from './child-view-container';
 
-const setDomApi = Marionette.View.setDomApi;
+const isNodeAttached = function(el) {
+  return document.documentElement.contains(el && el.parentNode);
+};
 
-const ViewMixin = _.pick(Marionette.View.prototype,
+const setDomApi = View.setDomApi;
+
+const ViewMixin = _.pick(View.prototype,
   'Dom',
   'supportsRenderLifecycle',
   'supportsDestroyLifecycle',
@@ -24,7 +29,7 @@ const ViewMixin = _.pick(Marionette.View.prototype,
   'isAttached',
   'delegateEvents',
   '_getEvents',
-  'getTriggers',
+  '_getTriggers',
   'delegateEntityEvents',
   'undelegateEntityEvents',
   'destroy',
@@ -32,9 +37,9 @@ const ViewMixin = _.pick(Marionette.View.prototype,
   'bindUIElements',
   'unbindUIElements',
   'getUI',
-  'childViewEventPrefix',
   'triggerMethod',
   '_buildEventProxies',
+  '_getEventPrefix',
   '_proxyChildViewEvents',
   '_childViewEventHandler',
   // BehaviorsMixin
@@ -45,6 +50,7 @@ const ViewMixin = _.pick(Marionette.View.prototype,
   '_proxyBehaviorViewProperties',
   '_delegateBehaviorEntityEvents',
   '_undelegateBehaviorEntityEvents',
+  '_deleteEntityEventHandlers',
   '_destroyBehaviors',
   '_removeBehavior',
   '_bindBehaviorUIElements',
@@ -72,9 +78,6 @@ const ViewMixin = _.pick(Marionette.View.prototype,
   '_getUI'
 );
 
-const isNodeAttached = Marionette.isNodeAttached;
-const MarionetteError = Marionette.Error;
-
 const ClassOptions = [
   'behaviors',
   'childView',
@@ -98,6 +101,8 @@ const ClassOptions = [
 // A view that iterates over a Backbone.Collection
 // and renders an individual child view for each model.
 const CollectionView = Backbone.View.extend({
+
+  childViewEventPrefix: 'childview',
 
   // flag for maintaining the sorted order of the collection
   sort: true,

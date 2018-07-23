@@ -2,11 +2,9 @@
 // --------------
 
 import _ from 'underscore';
-import Marionette from 'backbone.marionette';
+import { View } from 'backbone.marionette';
 import CollectionView from './collection-view';
-
-const MarionetteError = Marionette.Error;
-const View = Marionette.View;
+import MarionetteError from './error';
 
 const ClassOptions = [
   'childViewContainer',
@@ -79,7 +77,7 @@ const CompositeView = CollectionView.extend({
 
   // Return the serialized model
   serializeData() {
-    return this.serializeModel();
+    if (this.model) { return this.serializeModel(); }
   },
 
   // Renders the model and the collection.
@@ -90,7 +88,8 @@ const CompositeView = CollectionView.extend({
 
     this.triggerMethod('before:render', this);
 
-    this._renderTemplate();
+    const template = this.getTemplate();
+    if (template !== false) { this._renderTemplate(template); }
     this.bindUIElements();
     this.renderChildren();
 
